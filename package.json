@@ -1,0 +1,28 @@
+{
+  "name": "blanket",
+  "version": "1",
+  "description": "Utils for forumactif",
+  "main": "src/index.js",
+  "scripts": {
+    "build": "rollup -c",
+    "dev": "rollup -c -w",
+    "serve": "http-server ./main"
+  },
+  "author": "Kim Bnx",
+  "license": "ISC",
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^28.0.2",
+    "@rollup/plugin-node-resolve": "^16.0.0",
+    "@shikijs/markdown-it": "^3.2.2",
+    "http-server": "^14.1.1",
+    "rollup": "^2.79.2",
+    "rollup-plugin-livereload": "^2.0.5",
+    "rollup-plugin-serve": "^1.1.1",
+    "rollup-plugin-terser": "^7.0.2"
+  },
+  "dependencies": {
+    "markdown-it-async": "^2.2.0",
+    "markdown-it-container": "^4.0.0",
+    "shiki": "^3.2.2"
+  }
+}
