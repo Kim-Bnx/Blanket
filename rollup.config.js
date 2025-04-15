@@ -11,5 +11,5 @@ export default {
 
     inlineDynamicImports: true,
   },
-  plugins: [resolve(), commonjs()],
+  plugins: [resolve(), commonjs(), terser()],
 };
