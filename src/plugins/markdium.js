@@ -4,7 +4,7 @@ import { fromAsyncCodeToHtml } from "@shikijs/markdown-it/async";
 import { codeToHtml } from "shiki";
 
 const asideTypes = ["info", "warning", "tips"];
-const linkTypes = ["img", "ref", "to"];
+const linkTypes = ["img", "ref", "to", "cta", "demo"];
 
 function createSpoilerContainer(md) {
   return [
@@ -82,11 +82,8 @@ async function copy(pre) {
 
 export default {
   async init() {
-    const container = document.querySelector(".tuto");
-    if (!container) return;
-
-    const rawText = container.innerHTML;
-    const plainText = rawText.replace(/<br\s*\/?>/gi, "\n").replace(/&nbsp;/g, " ");
+    const posts = document.querySelectorAll(".tuto");
+    if (!posts) return;
 
     const md = MarkdownItAsync({ html: true });
     md.use(
@@ -105,9 +102,19 @@ export default {
 
     md.renderer.rules.link_open = createLinkRule();
 
-    const result = await md.renderAsync(plainText);
-    container.innerHTML = result;
-    document.querySelectorAll("pre.shiki").forEach((pre) => copy(pre));
-    container.style.visibility = "visible";
+    for (const post of posts) {
+      const rawText = post.innerHTML;
+      console.log(rawText);
+
+      const plainText = rawText
+        .replace(/<br\s*\/?>/gi, "\n")
+        .replace(/&nbsp;/g, " ")
+        .replace(/&#105;/g, "i");
+
+      const result = await md.renderAsync(plainText);
+      post.innerHTML = result;
+      document.querySelectorAll("pre.shiki").forEach((pre) => copy(pre));
+      post.style.visibility = "visible";
+    }
   },
 };
