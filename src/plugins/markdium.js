@@ -104,7 +104,6 @@ export default {
 
     for (const post of posts) {
       const rawText = post.innerHTML;
-      console.log(rawText);
 
       const plainText = rawText
         .replace(/<br\s*\/?>/gi, "\n")
