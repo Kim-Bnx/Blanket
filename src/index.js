@@ -1,8 +1,10 @@
 import Markdium from "./plugins/markdium.js";
+import blankTutorials from "./plugins/blankTutorials.js";
 
 const Blanket = async function () {
   const plugins = {
     Markdium,
+    blankTutorials,
   };
 
   for (const [name, plugin] of Object.entries(plugins)) {
