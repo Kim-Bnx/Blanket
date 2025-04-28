@@ -3,6 +3,8 @@ const tutorialsDB = window.supabase.createClient(
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFibnV1ZHNpdGZ5eHl1YnhlY2FhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDUxNzQ0OTIsImV4cCI6MjA2MDc1MDQ5Mn0.FLQ_e8STBAZDEqLVmQjeJNlm-JPfxJQL_iW00Gp3VAI"
 );
 
+const TUTORIALS_FORUM = ["8", "10", "15", "16"];
+
 function tutorialHeader({ creator, creator_link, difficulty, language, support, shop }) {
   return `
     <div class="tuto_avatar"></div>
@@ -131,6 +133,8 @@ function cleanCache() {
 async function submitForm() {
   const formData = getFormData(TUTORIAL_FORM);
 
+  console.log("Form data:", formData);
+
   const data = {
     title: formData.subject.toLowerCase(),
     creator: formData.creator,
@@ -169,8 +173,31 @@ async function submitForm() {
 }
 
 function setupTutorialForm() {
+  // Check if the page is a edit post page
   const formContainer = document.querySelector("#tutorialFormContainer");
   if (!formContainer) return;
+
+  const typeInput = document.querySelector(".topicType_input");
+  const titleInput = document.querySelector(".topicTitle_input");
+
+  const forum = document.querySelector("input[name='f']");
+
+  // Post mode
+  const newtopic = document.querySelector("input[name='mode'][value='newtopic']");
+  const reply = document.querySelector("input[name='mode'][value='reply']");
+  const edit = document.querySelector("input[name='mode'][value='editpost']");
+  const emptyTitle = document.querySelector("input[name='subject']").value;
+
+  if (reply || (edit && !emptyTitle)) {
+    titleInput.classList.add("hidden");
+    return;
+  } else if (newtopic && TUTORIALS_FORUM.includes(forum.value)) {
+    typeInput.classList.remove("hidden");
+  }
+  // case where the user is editting the first post
+  else if (edit && !forum && emptyTitle) {
+    typeInput.classList.remove("hidden");
+  }
 
   const icon0 = document.querySelector("input#post_icon_0");
   const icon1 = document.querySelector("input#post_icon_1");
