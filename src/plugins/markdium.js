@@ -108,7 +108,8 @@ export default {
       const plainText = rawText
         .replace(/<br\s*\/?>/gi, "\n")
         .replace(/&nbsp;/g, " ")
-        .replace(/&#105;/g, "i");
+        .replace(/&#105;/g, "i")
+        .replace(/&gt;/g, ">");
 
       const result = await md.renderAsync(plainText);
       post.innerHTML = result;
